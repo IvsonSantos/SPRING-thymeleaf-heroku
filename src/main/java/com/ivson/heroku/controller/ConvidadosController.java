@@ -1,13 +1,22 @@
 package com.ivson.heroku.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.ivson.heroku.repository.ConvidadosRepository;
 
 @Controller
 public class ConvidadosController {
 
+	@Autowired
+	private ConvidadosRepository convidadosRepository;
+
 	@GetMapping("/convidados")
-	public String listar() {
-		return "lista-convidados";
+	public ModelAndView listar() {
+		ModelAndView modelAndView = new ModelAndView("lista-convidados");
+		modelAndView.addObject("convidados", convidadosRepository.findAll());
+		return modelAndView;
 	}
 }
